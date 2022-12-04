@@ -1,9 +1,16 @@
 import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
+import localFont from '@next/font/local';
+
+const turnpike = localFont({ src: '../public/fonts/Turnpike.woff' })
+
+console.log(turnpike)
+
 // Create a theme instance.
 const theme = createTheme({
   typography: {
-    fontFamily: "Turnpike",
+    fontFamily: turnpike.style.fontFamily,
+    fontSize: 10
   },
   palette: {
     primary: {
@@ -21,18 +28,6 @@ const theme = createTheme({
     },
     background: {
       default: red.A700,
-    },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-      @font-face {
-        font-family: 'Turnpike';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Turnpike'), url(https://fonts.cdnfonts.com/s/4409/Turnpike.woff) format('woff');
-      }
-      `,
     },
   },
 });

@@ -1,5 +1,4 @@
-import { Grid, Typography } from "@mui/material";
-import Image from "next/image";
+import { Avatar, Grid, Typography } from "@mui/material";
 import { Prize } from "../../interfaces/Prize";
 
 const SubmitForm = ({ claimId, prize }: { claimId: string; prize: Prize }) => {
@@ -16,12 +15,20 @@ const SubmitForm = ({ claimId, prize }: { claimId: string; prize: Prize }) => {
         <Typography color="secondary" variant="h5">
           You Claim ID is:
         </Typography>
-        <Typography color="secondary" variant="h6">
+        <Typography color="secondary" variant="h3">
           {claimId}
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <img alt={prize.text} width={300} src={prize.image} />
+      <Grid item>
+        <Avatar
+          variant={"rounded"}
+          alt={prize.text}
+          src={prize.image}
+          style={{
+            width: 200,
+            height: 200,
+          }}
+        />
       </Grid>
       <Grid item xs={12}>
         <Typography color="secondary" variant="h5">

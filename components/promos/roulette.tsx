@@ -4,9 +4,9 @@ import RoulettePro from "react-roulette-pro";
 import "react-roulette-pro/dist/index.css";
 import { Prize } from "../../interfaces/Prize";
 import SubmitForm from "./submit-form";
-import short from "short-uuid";
+import randomstring from "randomstring";
 
-const prizes = [
+const prizes: Prize[] = [
   {
     code: "FREEQUARTERS",
     image: "/original.jpeg",
@@ -36,7 +36,7 @@ const prizes = [
 
 const winPrizeIndex = 0;
 
-const reproductionArray = (array = [], length = 0) => [
+const reproductionArray = (array: Prize[] = [], length = 0) => [
   ...Array(length)
     .fill("_")
     .map(() => array[Math.floor(Math.random() * array.length)]),
@@ -49,10 +49,8 @@ const reproducedPrizeList = [
   ...reproductionArray(prizes, prizes.length),
 ];
 
-short;
 const generateId = () => {
-  const shortA = short("1234567890");
-  return shortA.generate();
+  return randomstring.generate(6);
 };
 
 const prizeList: Prize[] = reproducedPrizeList.map((prize) => ({

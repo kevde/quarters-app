@@ -1,6 +1,6 @@
 
 export interface Prize {
-    id: string,
+    id?: string,
     image: string,
     text: string,
     code?: string,

@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogContent, Grid } from "@mui/material";
 import { useState } from "react";
-import RoulettePro from "react-roulette-pro";
+import RoulettePro, { PrizeType } from "react-roulette-pro";
 import "react-roulette-pro/dist/index.css";
 import { Prize } from "../../interfaces/Prize";
 import SubmitForm from "./submit-form";
@@ -86,7 +86,7 @@ const Roulette = () => {
     >
       <Grid item xs={12}>
         <RoulettePro
-          prizes={prizeList}
+          prizes={prizeList as PrizeType[]}
           prizeIndex={prizeIndex}
           start={start}
           spinningTime={3}

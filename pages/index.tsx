@@ -1,9 +1,9 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Avatar, Button, Grid, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-const Roulette = dynamic(() => import('../components/promos/roulette'));
+const Roulette = dynamic(() => import("../components/promos/roulette"));
 
 export default function Home() {
   return (
@@ -22,7 +22,17 @@ export default function Home() {
         >
           <Grid item xs={12} textAlign="center">
             <Typography variant="h4">Welcome to</Typography>
-            <Typography variant="h1">Quarters Burger House</Typography>
+          </Grid>
+          <Grid textAlign="center">
+            <Avatar
+              variant={"rounded"}
+              alt="Quarters Burger House"
+              src="/logo.jpeg"
+              style={{
+                width: 200,
+                height: 200,
+              }}
+            />
           </Grid>
           <Grid item xs={12}>
             <Roulette />

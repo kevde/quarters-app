@@ -1,10 +1,11 @@
 import { Button, Dialog, DialogContent, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoulettePro, { PrizeType } from "react-roulette-pro";
 import "react-roulette-pro/dist/index.css";
 import { Prize } from "../../interfaces/Prize";
 import SubmitForm from "./submit-form";
 import randomstring from "randomstring";
+import _ from "lodash";
 
 const prizes: Prize[] = [
   {
@@ -34,46 +35,51 @@ const prizes: Prize[] = [
   },
 ];
 
-const winPrizeIndex = 0;
-
-const reproductionArray = (array: Prize[] = [], length = 0) => [
-  ...Array(length)
-    .fill("_")
-    .map(() => array[Math.floor(Math.random() * array.length)]),
-];
-
-const reproducedPrizeList = [
-  ...prizes,
-  ...reproductionArray(prizes, prizes.length * 3),
-  ...prizes,
-  ...reproductionArray(prizes, prizes.length),
-];
-
 const generateId = () => {
   return randomstring.generate(6);
 };
 
-const prizeList: Prize[] = reproducedPrizeList.map((prize) => ({
-  ...prize,
-  id: generateId(),
-}));
+const randomizePrizes = (): Prize[] => {
+  return _.map(
+    _.shuffle([
+      ..._.times(1, () => prizes[0]),
+      ..._.times(8, () => prizes[1]),
+      ..._.times(3, () => prizes[2]),
+      ..._.times(2, () => prizes[3]),
+      ..._.times(1, () => prizes[4]),
+    ]),
+    (prize) => {
+      return {
+        id: generateId(),
+        ...prize,
+      };
+    }
+  );
+};
 
 const Roulette = () => {
   const [start, setStart] = useState(false);
   const [isPrizeSelected, setIsPrizeSelected] = useState(false);
+  const [prizeIndex, setPrizeIndex] = useState(0);
   const [claimId, setClaimId] = useState<string>("");
-  const [prize, setPrize] = useState<Prize>();
+  const [prizeList, setPrizeList] = useState<Prize[]>([]);
+  const [prizeCount, setPrizeCount] = useState<number>(0);
 
-  const prizeIndex = prizes.length * 4 + winPrizeIndex;
+  useEffect(() => {
+    const randomList = randomizePrizes();
+    setPrizeCount(randomList.length);
+    setPrizeList([...randomList, ...randomList, ...randomList]);
+  }, []);
 
   const handleStart = () => {
     setStart((prevState) => !prevState);
+    const currentIndex = prizeCount + _.random(0, prizeCount - 1);
+    setPrizeIndex(currentIndex);
   };
 
   const handlePrizeDefined = () => {
     setClaimId(generateId());
     setIsPrizeSelected(true);
-    setPrize(prizeList[prizeIndex]);
   };
 
   return (
@@ -91,14 +97,16 @@ const Roulette = () => {
           start={start}
           spinningTime={3}
           soundWhileSpinning="https://react-roulette-pro.ivanadmaers.com/assets/f3722b4574da2a35a4ef.mp3"
-          options={{ stopInCenter: true }}
+          options={{ stopInCenter: true, withoutAnimation: false }}
           // defaultDesignOptions={{ prizesWithText: true }}
           onPrizeDefined={handlePrizeDefined}
         />
         <Dialog open={isPrizeSelected}>
           <DialogContent>
             <Grid container>
-              {prize && <SubmitForm claimId={claimId} prize={prize} />}
+              {prizeList[prizeIndex] && (
+                <SubmitForm claimId={claimId} prize={prizeList[prizeIndex]} />
+              )}
             </Grid>
           </DialogContent>
         </Dialog>

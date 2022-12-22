@@ -1,0 +1,12 @@
+table:
+  name: beaches
+  schema: public
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - id
+        - beach
+        - link
+        - town
+      filter: {}

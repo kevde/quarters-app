@@ -1,0 +1,13 @@
+actions:
+  - name: GetBeaches
+    definition:
+      kind: ""
+      handler: http://host.docker.internal:3000
+    permissions:
+      - role: anonymous
+custom_types:
+  enums: []
+  input_objects: []
+  objects:
+    - name: GetBeachesOutput
+  scalars: []

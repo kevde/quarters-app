@@ -1,0 +1,11 @@
+type Query {
+  GetBeaches: GetBeachesOutput
+}
+
+type GetBeachesOutput {
+  beach: String!
+  id: Int!
+  link: String
+  town: String!
+}
+

@@ -1,0 +1,9 @@
+- comment: Get All Beaches
+  definition:
+    query:
+      collection_name: allowed-queries
+      query_name: getBeaches
+  methods:
+    - GET
+  name: getBeaches
+  url: beaches

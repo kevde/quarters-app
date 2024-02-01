@@ -1,0 +1,14 @@
+[
+  {
+    "cdkDeploy": "all-model",
+    "runOn": "all"
+  },
+  {
+    "cdkDeploy": "a-model",
+    "runOn": "a"
+  },
+  {
+    "cdkDeploy": "another-model",
+    "runOn": "all"
+  }
+]

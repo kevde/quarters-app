@@ -24,7 +24,7 @@ on:
         default: all
 jobs:
   matrix_prep:
-    runs-on: [self-hosted, common-4gb-or-smaller]
+    runs-on: [self-hosted]
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:

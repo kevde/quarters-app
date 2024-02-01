@@ -24,7 +24,7 @@ on:
         default: all
 jobs:
   matrix_prep:
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, ubuntu-latest]
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:

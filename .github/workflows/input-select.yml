@@ -35,3 +35,8 @@ jobs:
           component: "${{ github.event.inputs.component || 'all' }}"
         run: |
           echo "matrix=$(jq '[.[] | select(.runOn == "${{ env.component }}" or .cdkDeploy == "${{ env.component }}") | .cdkDeploy]' -c .github/workflows/list.json)" >> $GITHUB_OUTPUT
+      - name: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: Matrix Result
+          path: $GITHUB_OUTPUT

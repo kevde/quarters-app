@@ -1,4 +1,4 @@
-name: nonprod on-demand build pipeline
+name: workflow pipeline
 on:
   workflow_dispatch:
     inputs:
@@ -28,9 +28,9 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
-      - id: set-matrix
-        with: 
+      - name: Get Matrix
+        id: set-matrix
+        env: 
           component: "${{ github.event.inputs.component == '' && github.event.inputs.component || 'all' }}"
-        run: echo "matrix=$(jq '[.[] | select(.runOn == "${{ inputs.component }}" or .cdkDeploy == "${{ inputs.component }}") | .cdkDeploy]' -c .github/workflows/list.json)" >> $GITHUB_OUTPUT
-
+        run: |
+          echo "matrix=$(jq '[.[] | select(.runOn == "${{ env.component }}" or .cdkDeploy == "${{ env.component }}") | .cdkDeploy]' -c .github/workflows/list.json)" >> $GITHUB_OUTPUT

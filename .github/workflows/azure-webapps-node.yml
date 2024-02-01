@@ -1,0 +1,36 @@
+name: nonprod on-demand build pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: release
+        required: true
+        type: choice
+        options:
+          - 'dev'
+          - 'devint'
+        default: 'devint'
+      Branch:
+        description: Branch Name
+        required: true
+        default: 'master'
+      component:
+        type: choice
+        description: component
+        options:
+          - first
+          - second
+          - all
+        default: all
+jobs:
+  matrix_prep:
+    runs-on: [self-hosted, common-4gb-or-smaller]
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: set-matrix
+        with: 
+          component: "${{ github.event.inputs.component == '' && github.event.inputs.component || 'all' }}"
+        run: echo "matrix=$(jq '[.[] | select(.runOn == "${{ inputs.component }}" or .cdkDeploy == "${{ inputs.component }}") | .cdkDeploy]' -c .github/workflows/list.json)" >> $GITHUB_OUTPUT
+
